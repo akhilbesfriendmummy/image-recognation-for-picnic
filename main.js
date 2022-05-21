@@ -1,4 +1,4 @@
-//https://teachablemachine.withgoogle.com/models/tZBDvmqNc/
+
 
 Webcam.set({
     width:350,
@@ -14,3 +14,21 @@ function take_snapshot(){
     })
 }
 classifier=ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/tZBDvmqNc/model.json',modelLoaded);
+function modelLoaded(){
+    console.log('model is loaded');
+}
+function check(){
+    img=document.getElementById("captured_image");
+    classifier.classify(img,gotResult);
+
+}
+function gotResult(error,results){
+if(error){
+    console.error(error);
+}
+else{
+    console.log(results);
+    document.getElementById("result_object_name").innerHTML=results[0].label;
+    document.getElementById("result_object_accuressy").innerHTML=results[0].confidence.toFixed(3);
+}
+}
